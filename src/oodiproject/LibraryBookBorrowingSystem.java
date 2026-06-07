@@ -230,6 +230,9 @@ public class LibraryBookBorrowingSystem {
        Scanner sc = new Scanner(System.in);
        int choice = 0;
        
+       NewJFrame jframe = new NewJFrame();
+       
+       jframe.startGUI();
 
        userDatabase.add(new Patron("john_doe", "pass123", 101, false, 35));
        userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 12.50));
