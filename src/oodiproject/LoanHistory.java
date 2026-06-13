@@ -3,7 +3,7 @@ package oodiproject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoanHistory {
+public class LoanHistory implements java.io.Serializable{
     private int patronID;
     private List<Loan> loans;
     

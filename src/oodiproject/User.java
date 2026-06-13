@@ -1,9 +1,9 @@
 package oodiproject;
 import java.util.Scanner;
 
-public abstract class User {
+public abstract class User implements java.io.Serializable{
     
-    Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
     
         private String username;
         private String password;

@@ -1,6 +1,7 @@
 
 package oodiproject;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,6 +13,47 @@ public class LibraryBookBorrowingSystem {
          static ArrayList<User> userDatabase = new ArrayList<>();
          static User loggedInUser = null;
     
+         private static final String storageFile = "storagefile.dat";
+         
+    public static void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storageFile))) {
+            
+            // Pack all your global system variables into the stream
+            oos.writeObject(userDatabase);
+            oos.writeObject(globalCatalog);
+            oos.writeObject(globalSettings);
+            oos.writeObject(globalFinances);
+            
+            System.out.println("[SYSTEM DATA STORAGE]: All engine data successfully written to disk.");
+        } catch (IOException e) {
+            System.err.println("[STORAGE ERROR]: Failed to preserve application state: " + e.getMessage());
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static void loadData() {
+        File dataFile = new File(storageFile);
+        
+        // If the file doesn't exist yet (first-time run), skip loading
+        if (!dataFile.exists()) {
+            System.out.println("[SYSTEM INITIALIZATION]: No previous storage state detected, creating new file.");
+            return;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dataFile))) {
+            
+            // Unpack files in the EXACT same sequence they were written
+            userDatabase = (ArrayList<User>) ois.readObject();
+            globalCatalog = (Catalog) ois.readObject();
+            globalSettings = (SystemSettings) ois.readObject();
+            globalFinances = (Finances) ois.readObject();
+            
+            System.out.println("[SYSTEM INITIALIZATION]: Previous program state loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("[CRITICAL LOAD ERROR]: Local data corrupted or incompatible: " + e.getMessage());
+        }
+    }
+         
     public static void signUp(){
         
         Scanner sc = new Scanner(System.in);
@@ -227,6 +269,8 @@ public class LibraryBookBorrowingSystem {
     
     public static void main(String[] args) {
         
+       loadData();
+        
        Scanner sc = new Scanner(System.in);
        int choice = 0;
        
@@ -234,8 +278,8 @@ public class LibraryBookBorrowingSystem {
        
        jframe.startGUI();
 
-       userDatabase.add(new Patron("john_doe", "pass123", 101, false, 35));
-       userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 12.50));
+       userDatabase.add(new Patron("john_doe", "pass123", 101, false, 0));
+       userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 0));
        userDatabase.add(new Librarian("mr_green", "lbrPass", 501, "Office 102", "LBR-01", false));
        userDatabase.add(new Librarian("ms_tan", "lbrPass2", 502, "Office 105", "LBR-02", false));
        userDatabase.add(new Admin("alice_w", "adminPass", 999, "Suite 501", "ADM-09", false));
@@ -299,6 +343,8 @@ public class LibraryBookBorrowingSystem {
             System.out.println();
        
             if (choice == 3){
+                sc.close();
+                saveData();
                 System.out.println("\nShutting down library systems. Goodbye!");
                 break;
             }//if

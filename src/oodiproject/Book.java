@@ -1,7 +1,7 @@
 
 package oodiproject;
 
-public class Book {
+public class Book implements java.io.Serializable{
 
     private int bookID;
     private String genre;

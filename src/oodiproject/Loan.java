@@ -3,7 +3,7 @@ package oodiproject;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class Loan {
+public class Loan implements java.io.Serializable{
     
     private Book borrowedBook;
     private LocalDateTime dateOfLoan;
@@ -98,10 +98,16 @@ public class Loan {
         double fine = 0;
         
         int overdueDays = (int) ChronoUnit.DAYS.between(this.dueDate, LocalDateTime.now());
-        
         if (overdueDays >= 0){
-            fine = overdueDays * 0.25;
+            fine = overdueDays * LibraryBookBorrowingSystem.globalSettings.getFineRate();
         }
+        
+    String condition = this.borrowedBook.getBookCondition();
+    if ("Damaged".equalsIgnoreCase(condition)) {
+        fine = fine + 25.00;
+    } else if ("Missing".equalsIgnoreCase(condition)) {
+        fine = fine + 35.00;
+    }
         
         return fine;
     }

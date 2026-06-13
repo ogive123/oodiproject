@@ -93,44 +93,55 @@ public interface canManageLoans {
                 }
             }
             
-            else if (choice == 3) {
-                List<Loan> activeLoans = patron.getBorrowingHistory().getLoans();
-                if (activeLoans.isEmpty()) {
-                    System.out.println("\nYou currently have no checked-out items to return.");
-                    return;
-                }
-                
-                System.out.println("\n--- Select Item Being Deposited Back to Inventory ---");
-                for (int i = 0; i < activeLoans.size(); i++) {
-                    Loan l = activeLoans.get(i);
-                    System.out.println(i + ". " + l.getBorrowedBook().getTitle() + " [Current Status: " + l.getLoanStatus() + "]");
-                }
-                System.out.print("Enter target list entry position selection code: ");
-                int returnIndex = sc.nextInt();
-                
-                if (returnIndex >= 0 && returnIndex < activeLoans.size()) {
-                    Loan selectedLoan = activeLoans.get(returnIndex);
-                    Book selectedBook = selectedLoan.getBorrowedBook();
-                    
-                    selectedBook.updateStatus(true);
-                    selectedLoan.setLoanStatus("Returned");
-                    
+    else if (choice == 3) {
+        List<Loan> activeLoans = patron.getBorrowingHistory().getLoans();
+        if (activeLoans.isEmpty()) {
+            System.out.println("\nYou currently have no checked-out items to return.");
+            return;
+        }
 
-                    double accumulatedLateFee = selectedLoan.calculateFine();
-                    if (accumulatedLateFee > 0) {
-                        patron.setCurrentFees(patron.getCurrentFees() + accumulatedLateFee);
-                        System.out.println("[PROCESSED SUCCESSFUL] Return recorded OVERDUE. An account fine item of RM" + 
-                                           accumulatedLateFee + " was automatically billed to your profile.");
-                    } else {
-                        System.out.println("[PROCESSED SUCCESSFUL] Return recorded clear. Thank you for returning on time!");
-                    }
-                    
+        System.out.println("\n--- Select Book to Return ---");
+        for (int i = 0; i < activeLoans.size(); i++) {
+            Loan l = activeLoans.get(i);
+            System.out.println(i + ". " + l.getBorrowedBook().getTitle() + " [Current Status: " + l.getLoanStatus() + "]");
+        }
+        System.out.print("Enter target list entry position selection code: ");
+        int returnIndex = sc.nextInt();
+    
+        if (returnIndex >= 0 && returnIndex < activeLoans.size()) {
+            Loan selectedLoan = activeLoans.get(returnIndex);
+            Book selectedBook = selectedLoan.getBorrowedBook();
+        
+            System.out.print("Evaluate returned book condition (1. Good | 2. Damaged | 3. Missing): ");
+            int conditionChoice = sc.nextInt();
 
-                    activeLoans.remove(returnIndex);
-                } else {
-                    System.out.println("[ERROR] Selection target out of listing boundary indexes.");
-                }
+            if (conditionChoice == 2) {
+                selectedBook.setBookCondition("Damaged");
+                selectedBook.updateStatus(true); // Returned to library, but marked damaged
+            } else if (conditionChoice == 3) {
+                selectedBook.setBookCondition("Missing");
+                selectedBook.updateStatus(false); // Book is lost, keep status unavailable
+            } else {
+                selectedBook.setBookCondition("Good");
+                selectedBook.updateStatus(true); // Safe and clear for next borrower
             }
+        
+            selectedLoan.setLoanStatus("Returned");
+        
+            double transactionFine = selectedLoan.calculateFine();
+            if (transactionFine > 0) {
+                        patron.setCurrentFees(patron.getCurrentFees() + transactionFine);
+                System.out.println("[FEES ASSESSED]: An automated fine of RM" + transactionFine + 
+                                   " has been generated and charged to your account.");
+            } else {
+                System.out.println("[RETURN SUCCESSFUL]: Book returned on schedule in good condition. No fees incurred.");
+            }
+        
+            activeLoans.remove(returnIndex);
+        } else {
+            System.out.println("[ERROR] Selection target out of listing boundary indexes.");
+        }
+    }
     }
 }
     default void checkBorrowingHistory(){

@@ -3,7 +3,7 @@ package oodiproject;
 
 import java.util.ArrayList;
 
-public class Catalog {
+public class Catalog implements java.io.Serializable{
 
     private ArrayList<Book> books;
 
