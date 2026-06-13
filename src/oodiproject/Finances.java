@@ -3,7 +3,7 @@ package oodiproject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Finances {
+public class Finances implements java.io.Serializable {
 
     /*finances is probably dependent on loanhistory too*/
     private double revenue = 0;

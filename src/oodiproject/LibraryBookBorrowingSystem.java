@@ -278,54 +278,52 @@ public class LibraryBookBorrowingSystem {
        
        jframe.startGUI();
 
-       userDatabase.add(new Patron("john_doe", "pass123", 101, false, 0));
-       userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 0));
-       userDatabase.add(new Librarian("mr_green", "lbrPass", 501, "Office 102", "LBR-01", false));
-       userDatabase.add(new Librarian("ms_tan", "lbrPass2", 502, "Office 105", "LBR-02", false));
-       userDatabase.add(new Admin("alice_w", "adminPass", 999, "Suite 501", "ADM-09", false));
-       userDatabase.add(new Admin("bob_k", "adminPass2", 998, "Suite 502", "ADM-10", false));
-       
-       globalCatalog.addBook(new Book(1001, "Fiction", "George Orwell", "1984", "A1"));
-       globalCatalog.addBook(new Book(1002, "Science", "Stephen Hawking", "A Brief History of Time", "1"));
-       globalCatalog.addBook(new Book(1003, "Fantasy", "J.K. Rowling", "Harry Potter", "C1"));
-       globalCatalog.addBook(new Book(1004, "Fiction", "F. Scott Fitzgerald", "The Great Gatsby", "A2"));
-       globalCatalog.addBook(new Book(1005, "Science", "Carl Sagan", "Cosmos", "B2"));
-       globalCatalog.addBook(new Book(1006, "Fantasy", "J.R.R. Tolkien", "The Hobbit", "C2"));
-       globalCatalog.addBook(new Book(1007, "Fiction", "H.G. Wells", "The Time Machine", "A3"));
-       globalCatalog.addBook(new Book(1008, "Science", "Randall Munroe", "What If?", "B3"));
-       globalCatalog.addBook(new Book(1009, "Fantasy", "J.R.R. Tolkien", "The Lord of the Rings", "C3", false, "Lost"));
-       globalCatalog.addBook(new Book(1010, "Fiction", "Dan Brown", "The Da Vinci Code", "A4"));
-       globalCatalog.addBook(new Book(1011, "Science", "Merlin Sheldrake", "Entangled Life", "B4", false, "Good"));
-       globalCatalog.addBook(new Book(1012, "Fantasy", "George R.R. Martin", "A Game of Thrones", "C4", true, "Damaged"));
-       
-       Book book1 = globalCatalog.getBooks().get(3);
-       Book book2 = globalCatalog.getBooks().get(6);
-       Book book3 = globalCatalog.getBooks().get(7);
-       Book book4 = globalCatalog.getBooks().get(0);
-       
-       for (User user : userDatabase){
-           if (user instanceof Patron){
-               Patron patron = (Patron) user;
-               
-               if (patron.getUserID() == 101){
-                   patron.getBorrowingHistory().addLoanRecord(new Loan(book1));
-                   
-                   java.time.LocalDateTime pastDate = java.time.LocalDateTime.now().minusDays(10);
-                   java.time.LocalDateTime pastDueDate = pastDate.plusDays(7);
-                   patron.getBorrowingHistory().addLoanRecord(new Loan(book2, pastDate, pastDueDate, 3));
-               } 
-               else if (patron.getUserID() == 102) {
-                   java.time.LocalDateTime pastDate = java.time.LocalDateTime.now().minusDays(10);
-                   java.time.LocalDateTime pastDueDate = pastDate.plusDays(7);
-                   patron.getBorrowingHistory().addLoanRecord(new Loan(book3, pastDate, pastDueDate, 3));
-                   
-                   pastDate = java.time.LocalDateTime.now().minusDays(107);
-                   pastDueDate = pastDate.plusDays(100);
-                   patron.getBorrowingHistory().addLoanRecord(new Loan(book4, pastDate, pastDueDate, 0));
-               }
-               
-            
+       if (userDatabase.isEmpty()) {
+           userDatabase.add(new Patron("john_doe", "pass123", 101, false, 0));
+           userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 0));
+           userDatabase.add(new Librarian("mr_green", "lbrPass", 501, "Office 102", "LBR-01", false));
+           userDatabase.add(new Librarian("ms_tan", "lbrPass2", 502, "Office 105", "LBR-02", false));
+           userDatabase.add(new Admin("alice_w", "adminPass", 999, "Suite 501", "ADM-09", false));
+           userDatabase.add(new Admin("bob_k", "adminPass2", 998, "Suite 502", "ADM-10", false));
        }
+       
+       if (globalCatalog.getBooks().isEmpty()) {
+           globalCatalog.addBook(new Book(1001, "Fiction", "George Orwell", "1984", "A1"));
+           globalCatalog.addBook(new Book(1002, "Science", "Stephen Hawking", "A Brief History of Time", "1"));
+           globalCatalog.addBook(new Book(1003, "Fantasy", "J.K. Rowling", "Harry Potter", "C1"));
+           globalCatalog.addBook(new Book(1004, "Fiction", "F. Scott Fitzgerald", "The Great Gatsby", "A2"));
+           globalCatalog.addBook(new Book(1005, "Science", "Carl Sagan", "Cosmos", "B2"));
+           globalCatalog.addBook(new Book(1006, "Fantasy", "J.R.R. Tolkien", "The Hobbit", "C2"));
+           globalCatalog.addBook(new Book(1007, "Fiction", "H.G. Wells", "The Time Machine", "A3"));
+           globalCatalog.addBook(new Book(1008, "Science", "Randall Munroe", "What If?", "B3"));
+           globalCatalog.addBook(new Book(1009, "Fantasy", "J.R.R. Tolkien", "The Lord of the Rings", "C3", false, "Lost"));
+           globalCatalog.addBook(new Book(1010, "Fiction", "Dan Brown", "The Da Vinci Code", "A4"));
+           globalCatalog.addBook(new Book(1011, "Science", "Merlin Sheldrake", "Entangled Life", "B4", false, "Good"));
+           globalCatalog.addBook(new Book(1012, "Fantasy", "George R.R. Martin", "A Game of Thrones", "C4", true, "Damaged"));
+
+           Book book1 = globalCatalog.getBooks().get(3);
+           Book book2 = globalCatalog.getBooks().get(6);
+           Book book3 = globalCatalog.getBooks().get(7);
+           Book book4 = globalCatalog.getBooks().get(0);
+
+           for (User user : userDatabase) {
+               if (user instanceof Patron) {
+                   Patron patron = (Patron) user;
+                   if (patron.getUserID() == 101) {
+                       patron.getBorrowingHistory().addLoanRecord(new Loan(book1));
+                       java.time.LocalDateTime pastDate = java.time.LocalDateTime.now().minusDays(10);
+                       java.time.LocalDateTime pastDueDate = pastDate.plusDays(7);
+                       patron.getBorrowingHistory().addLoanRecord(new Loan(book2, pastDate, pastDueDate, 3));
+                   } else if (patron.getUserID() == 102) {
+                       java.time.LocalDateTime pastDate = java.time.LocalDateTime.now().minusDays(10);
+                       java.time.LocalDateTime pastDueDate = pastDate.plusDays(7);
+                       patron.getBorrowingHistory().addLoanRecord(new Loan(book3, pastDate, pastDueDate, 3));
+                       pastDate = java.time.LocalDateTime.now().minusDays(107);
+                       pastDueDate = pastDate.plusDays(100);
+                       patron.getBorrowingHistory().addLoanRecord(new Loan(book4, pastDate, pastDueDate, 0));
+                   }
+               }
+           }
        }
        
        

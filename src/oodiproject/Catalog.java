@@ -59,6 +59,7 @@ public class Catalog implements java.io.Serializable{
         for (Book book : books) {
             if (book.getGenre().equalsIgnoreCase(genre)) {
                 System.out.println(book.getDetails());
+                found = true;
             }
         }
         if (!found) {

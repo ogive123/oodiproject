@@ -117,13 +117,13 @@ public interface canManageLoans {
 
             if (conditionChoice == 2) {
                 selectedBook.setBookCondition("Damaged");
-                selectedBook.updateStatus(true); // Returned to library, but marked damaged
+                selectedBook.updateStatus(true);
             } else if (conditionChoice == 3) {
                 selectedBook.setBookCondition("Missing");
-                selectedBook.updateStatus(false); // Book is lost, keep status unavailable
+                selectedBook.updateStatus(false);
             } else {
                 selectedBook.setBookCondition("Good");
-                selectedBook.updateStatus(true); // Safe and clear for next borrower
+                selectedBook.updateStatus(true);
             }
         
             selectedLoan.setLoanStatus("Returned");

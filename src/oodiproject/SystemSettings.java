@@ -1,6 +1,6 @@
 package oodiproject;
 
-public class SystemSettings {
+public class SystemSettings implements java.io.Serializable {
     /*correct systemsettings to have
     fine rate too
     */
