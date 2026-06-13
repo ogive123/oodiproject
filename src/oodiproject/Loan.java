@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Loan implements java.io.Serializable{
+    private static final long serialVersionUID = 1L;
     
     private Book borrowedBook;
     private LocalDateTime dateOfLoan;

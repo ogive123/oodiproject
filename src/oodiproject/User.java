@@ -2,8 +2,7 @@ package oodiproject;
 import java.util.Scanner;
 
 public abstract class User implements java.io.Serializable{
-    
-    transient Scanner scanner = new Scanner(System.in);
+    private static final long serialVersionUID = 1L;
     
         private String username;
         private String password;

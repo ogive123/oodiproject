@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoanHistory implements java.io.Serializable{
+    private static final long serialVersionUID = 1L;
+    
     private int patronID;
     private List<Loan> loans;
     

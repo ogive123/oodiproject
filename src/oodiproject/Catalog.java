@@ -4,6 +4,7 @@ package oodiproject;
 import java.util.ArrayList;
 
 public class Catalog implements java.io.Serializable{
+    private static final long serialVersionUID = 1L;
 
     private ArrayList<Book> books;
 

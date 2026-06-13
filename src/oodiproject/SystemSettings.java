@@ -1,6 +1,7 @@
 package oodiproject;
 
 public class SystemSettings implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     /*correct systemsettings to have
     fine rate too
     */

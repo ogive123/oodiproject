@@ -18,7 +18,6 @@ public class LibraryBookBorrowingSystem {
     public static void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storageFile))) {
             
-            // Pack all your global system variables into the stream
             oos.writeObject(userDatabase);
             oos.writeObject(globalCatalog);
             oos.writeObject(globalSettings);
@@ -34,7 +33,6 @@ public class LibraryBookBorrowingSystem {
     public static void loadData() {
         File dataFile = new File(storageFile);
         
-        // If the file doesn't exist yet (first-time run), skip loading
         if (!dataFile.exists()) {
             System.out.println("[SYSTEM INITIALIZATION]: No previous storage state detected, creating new file.");
             return;
@@ -42,7 +40,6 @@ public class LibraryBookBorrowingSystem {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dataFile))) {
             
-            // Unpack files in the EXACT same sequence they were written
             userDatabase = (ArrayList<User>) ois.readObject();
             globalCatalog = (Catalog) ois.readObject();
             globalSettings = (SystemSettings) ois.readObject();

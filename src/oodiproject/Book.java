@@ -2,6 +2,7 @@
 package oodiproject;
 
 public class Book implements java.io.Serializable{
+    private static final long serialVersionUID = 1L;
 
     private int bookID;
     private String genre;

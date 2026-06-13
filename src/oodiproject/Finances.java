@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Finances implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
 
     /*finances is probably dependent on loanhistory too*/
     private double revenue = 0;
