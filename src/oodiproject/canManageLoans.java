@@ -16,6 +16,25 @@ public interface canManageLoans {
         
         if (this instanceof Patron) {
             Patron patron = (Patron) this;
+            
+            double liveFines = patron.getBorrowingHistory().calculateUnpaidFines();
+            double totalOutstandingFees = patron.getCurrentFees() + liveFines;
+            
+            if (choice == 1 || choice == 2) {
+                double threshold = LibraryBookBorrowingSystem.globalSettings.getFineThreshold();
+                
+                if (totalOutstandingFees >= threshold) {
+                    System.out.println("\n=========================================");
+                    System.out.println("       [TRANSACTION BLOCKED - REASON]     ");
+                    System.out.println("=========================================");
+                    System.out.println("Action Denied! Your outstanding system balance");
+                    System.out.println("of RM" + String.format("%.2f", totalOutstandingFees) + " meets or exceeds the limit of RM" + String.format("%.2f", threshold));
+                    System.out.println("-----------------------------------------");
+                    System.out.println("Please return overdue books or clear unpaid fees first.");
+                    System.out.println("=========================================\n");
+                    return;
+                }
+            }
         
             if (choice == 1) {
                 System.out.print("\nEnter the Book ID to borrow: ");

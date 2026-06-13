@@ -106,6 +106,16 @@ public class LibraryBookBorrowingSystem {
                 System.out.println("Wrong Username or Password. Please try again.");
             }//else
             }//while
+        
+        if (loggedInUser instanceof Patron) {
+            Patron patron = (Patron) loggedInUser;
+    
+            for (Loan loan : patron.getBorrowingHistory().getLoans()) {
+                if (java.time.LocalDateTime.now().isAfter(loan.getDueDate())) {
+                    loan.setLoanStatus("Overdue");
+                }
+            }
+        }
     }
     
     public static void displayCatalog(){
