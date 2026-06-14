@@ -141,7 +141,9 @@ public class PatronDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_viewCatalogBtnActionPerformed
 
     private void payFinesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payFinesButtonActionPerformed
-        // TODO add your handling code here:
+        PayFeesFrame payfees = new PayFeesFrame();
+        payfees.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_payFinesButtonActionPerformed
 
     private void loanHistoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanHistoryBtnActionPerformed
@@ -149,7 +151,9 @@ public class PatronDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_loanHistoryBtnActionPerformed
 
     private void manageLoansButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageLoansButtonActionPerformed
-        // TODO add your handling code here:
+        ManageLoansFrame manageloans = new ManageLoansFrame();
+        manageloans.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_manageLoansButtonActionPerformed
 
     /**

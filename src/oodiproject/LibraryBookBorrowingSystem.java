@@ -282,8 +282,8 @@ public class LibraryBookBorrowingSystem {
        int choice = 0;
 
        if (userDatabase.isEmpty()) {
-           userDatabase.add(new Patron("john_doe", "pass123", 101, false, 0));
-           userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 0));
+           userDatabase.add(new Patron("john_doe", "pass123", 101, false, 50));
+           userDatabase.add(new Patron("jane_smith", "pass456", 102, false, 25.50));
            userDatabase.add(new Librarian("mr_green", "lbrPass", 501, "Office 102", "LBR-01", false));
            userDatabase.add(new Librarian("ms_tan", "lbrPass2", 502, "Office 105", "LBR-02", false));
            userDatabase.add(new Admin("alice_w", "adminPass", 999, "Suite 501", "ADM-09", false));
