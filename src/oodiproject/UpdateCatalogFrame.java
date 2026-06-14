@@ -128,7 +128,9 @@ public class UpdateCatalogFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_editBookBtnActionPerformed
 
     private void addBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookBtnActionPerformed
-        // TODO add your handling code here:
+        AddBookFrame addBookForm = new AddBookFrame();
+        addBookForm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_addBookBtnActionPerformed
 
     private void deleteBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookBtnActionPerformed
