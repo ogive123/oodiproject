@@ -146,7 +146,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editSystemSettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSystemSettingsBtnActionPerformed
-        // TODO add your handling code here:
+        new EditSystemSettingsFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_editSystemSettingsBtnActionPerformed
 
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
@@ -162,7 +163,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_viewCatalogBtnActionPerformed
 
     private void changeUserRoleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUserRoleBtnActionPerformed
-        // TODO add your handling code here:
+        new ManageUserRolesFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_changeUserRoleBtnActionPerformed
 
     private void makeReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeReportBtnActionPerformed
