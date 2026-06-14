@@ -1,5 +1,4 @@
 package oodiproject;
-import java.util.Scanner;
 
 public abstract class User implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
