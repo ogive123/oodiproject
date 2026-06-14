@@ -34,7 +34,6 @@ public class PayFeesFrame extends javax.swing.JFrame {
     
     private void updateFeeLabels() {
         if (currentPatron != null) {
-        // Double check live fine balances right before rendering text labels
         if (currentPatron.getBorrowingHistory() != null) {
             double historyFines = currentPatron.getBorrowingHistory().calculateUnpaidFines();
             if (historyFines > 0 && currentPatron.getCurrentFees() == 0.0) {
