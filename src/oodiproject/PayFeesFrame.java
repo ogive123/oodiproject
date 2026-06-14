@@ -246,10 +246,8 @@ public class PayFeesFrame extends javax.swing.JFrame {
                         "Transaction Approved", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             
-            // Sync mutations across data models and flush storage cache safely
             LibraryBookBorrowingSystem.saveData();
             
-            // Refresh components and input text fields
             calculatedPaymentFee = 0.0;
             txtPayAmount.setText("");
             updateFeeLabels();
