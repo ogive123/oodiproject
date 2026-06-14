@@ -218,7 +218,7 @@ public class BorrowBookFrame extends javax.swing.JFrame {
             return;
         }
 
-        if (!(loggedInOperator instanceof Librarian || loggedInOperator instanceof Admin)) {
+        if (!(loggedInOperator instanceof Librarian)) {
             
             double outstandingBalance = targetPatron.getCurrentFees() + targetPatron.getBorrowingHistory().calculateUnpaidFines();
             if (outstandingBalance >= LibraryBookBorrowingSystem.globalSettings.getFineThreshold()) {
