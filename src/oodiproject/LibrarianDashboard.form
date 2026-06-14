@@ -37,14 +37,12 @@
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="manageLoansBtn" max="32767" attributes="0"/>
                   <Component id="viewLoanHistoryBtn" alignment="0" max="32767" attributes="0"/>
-                  <Component id="addBookBtn" alignment="0" max="32767" attributes="0"/>
+                  <Component id="updateCatalogBtn" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="generateReportSelect" min="-2" pref="95" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="makeReportBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="deleteBookBtn" alignment="0" max="32767" attributes="0"/>
-                  <Component id="editBookBtn" alignment="0" max="32767" attributes="0"/>
                   <Component id="viewCatalogBtn" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
@@ -69,18 +67,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       <Component id="viewCatalogBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="manageLoansBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="viewLoanHistoryBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="addBookBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="editBookBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="deleteBookBtn" min="-2" max="-2" attributes="0"/>
+                      <Component id="updateCatalogBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="generateReportSelect" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -146,29 +140,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewCatalogBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="editBookBtn">
+    <Component class="javax.swing.JButton" name="updateCatalogBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="EDIT BOOK"/>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="text" type="java.lang.String" value="UPDATE CATALOG"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editBookBtnActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="addBookBtn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ADD BOOK"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBookBtnActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="deleteBookBtn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="DELETE BOOK"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBookBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateCatalogBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="makeReportBtn">

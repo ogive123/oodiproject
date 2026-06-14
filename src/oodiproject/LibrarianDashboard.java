@@ -34,9 +34,7 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         logOutBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         viewCatalogBtn = new javax.swing.JButton();
-        editBookBtn = new javax.swing.JButton();
-        addBookBtn = new javax.swing.JButton();
-        deleteBookBtn = new javax.swing.JButton();
+        updateCatalogBtn = new javax.swing.JButton();
         makeReportBtn = new javax.swing.JButton();
         generateReportSelect = new javax.swing.JComboBox<>();
 
@@ -78,25 +76,10 @@ public class LibrarianDashboard extends javax.swing.JFrame {
             }
         });
 
-        editBookBtn.setText("EDIT BOOK");
-        editBookBtn.setToolTipText("");
-        editBookBtn.addActionListener(new java.awt.event.ActionListener() {
+        updateCatalogBtn.setText("UPDATE CATALOG");
+        updateCatalogBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBookBtnActionPerformed(evt);
-            }
-        });
-
-        addBookBtn.setText("ADD BOOK");
-        addBookBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBookBtnActionPerformed(evt);
-            }
-        });
-
-        deleteBookBtn.setText("DELETE BOOK");
-        deleteBookBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBookBtnActionPerformed(evt);
+                updateCatalogBtnActionPerformed(evt);
             }
         });
 
@@ -131,13 +114,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(manageLoansBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewLoanHistoryBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(updateCatalogBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(generateReportSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(makeReportBtn))
-                    .addComponent(deleteBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewCatalogBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 12, Short.MAX_VALUE))
         );
@@ -156,18 +137,14 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGap(54, 54, 54)
                         .addComponent(viewCatalogBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(manageLoansBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(viewLoanHistoryBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addBookBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editBookBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteBookBtn)
+                        .addComponent(updateCatalogBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(generateReportSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,7 +156,9 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewLoanHistoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLoanHistoryBtnActionPerformed
-        // TODO add your handling code here:
+        LoanHistoryFrame historyScreen = new LoanHistoryFrame();
+        historyScreen.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_viewLoanHistoryBtnActionPerformed
 
     private void manageLoansBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageLoansBtnActionPerformed
@@ -200,17 +179,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_viewCatalogBtnActionPerformed
 
-    private void editBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editBookBtnActionPerformed
-
-    private void addBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addBookBtnActionPerformed
-
-    private void deleteBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteBookBtnActionPerformed
+    private void updateCatalogBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCatalogBtnActionPerformed
+        UpdateCatalogFrame updatecatalog = new UpdateCatalogFrame();
+        updatecatalog.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_updateCatalogBtnActionPerformed
 
     private void makeReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeReportBtnActionPerformed
         String selectedReport = generateReportSelect.getSelectedItem().toString();
@@ -322,14 +295,12 @@ public class LibrarianDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LBBS;
-    private javax.swing.JButton addBookBtn;
-    private javax.swing.JButton deleteBookBtn;
-    private javax.swing.JButton editBookBtn;
     private javax.swing.JComboBox<String> generateReportSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logOutBtn;
     private javax.swing.JButton makeReportBtn;
     private javax.swing.JButton manageLoansBtn;
+    private javax.swing.JButton updateCatalogBtn;
     private javax.swing.JButton viewCatalogBtn;
     private javax.swing.JButton viewLoanHistoryBtn;
     // End of variables declaration//GEN-END:variables
