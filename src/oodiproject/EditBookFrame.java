@@ -4,6 +4,9 @@
  */
 package oodiproject;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author VICTUS
@@ -12,11 +15,55 @@ public class EditBookFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditBookFrame.class.getName());
 
+    private ArrayList<Book> catalogBooks;
+    private Book selectedBook = null;
+    
     /**
      * Creates new form EditBookFrame
      */
     public EditBookFrame() {
         initComponents();
+        this.catalogBooks = LibraryBookBorrowingSystem.globalCatalog.getBooks();
+        populateBookComboBox();
+    }
+    
+    private void populateBookComboBox() {
+        cmbBooks.removeAllItems();
+        
+        if (catalogBooks == null || catalogBooks.isEmpty()) {
+            cmbBooks.addItem("No books available in catalog");
+            btnSave.setEnabled(false);
+            return;
+        }
+        
+        btnSave.setEnabled(true);
+        for (Book b : catalogBooks) {
+            cmbBooks.addItem("[ID: " + b.getBookID() + "] " + b.getTitle());
+        }
+        
+        if (cmbBooks.getItemCount() > 0) {
+            cmbBooks.setSelectedIndex(0);
+            loadBookDetails(0);
+        }
+    }
+    
+    private void loadBookDetails(int index) {
+        if (index >= 0 && index < catalogBooks.size()) {
+            selectedBook = catalogBooks.get(index);
+            
+            txtTitle.setText(selectedBook.getTitle());
+            txtAuthor.setText(selectedBook.getAuthor());
+            txtGenre.setText(selectedBook.getGenre());
+            txtShelfLocation.setText(selectedBook.getShelfLocation());
+            chkAvailable.setSelected(selectedBook.isIsAvailable());
+            
+            String condition = selectedBook.getBookCondition();
+            if ("Damaged".equalsIgnoreCase(condition)) {
+                cmbCondition.setSelectedItem("Damaged");
+            } else {
+                cmbCondition.setSelectedItem("Good");
+            }
+        }
     }
 
     /**
@@ -28,6 +75,7 @@ public class EditBookFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         LBBS = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
         txtAuthor = new javax.swing.JTextField();
@@ -43,6 +91,10 @@ public class EditBookFrame extends javax.swing.JFrame {
         chkAvailable = new javax.swing.JCheckBox();
         cmbBooks = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,8 +129,27 @@ public class EditBookFrame extends javax.swing.JFrame {
         jLabel1.setText("Available for Borrowing:");
 
         cmbBooks.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBooks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBooksActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Book to Edit:");
+
+        btnSave.setText("CONFIRM");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("BACK");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,45 +158,52 @@ public class EditBookFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(25, 25, 25))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chkAvailable))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel15)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(150, 150, 150)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(chkAvailable))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTitle)
-                                    .addComponent(txtAuthor)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel15)
+                                        .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cmbCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(txtShelfLocation)
-                                    .addComponent(txtGenre)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbBooks, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(109, 109, 109))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(cmbCondition, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtShelfLocation, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtGenre, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtAuthor, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(257, 257, 257)
+                        .addComponent(btnSave)))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbBooks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
@@ -153,7 +231,9 @@ public class EditBookFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(chkAvailable))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(btnSave)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,6 +246,60 @@ public class EditBookFrame extends javax.swing.JFrame {
     private void txtShelfLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtShelfLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtShelfLocationActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if (selectedBook == null) {
+            JOptionPane.showMessageDialog(this, "No valid book target selected to update.", "Selection Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String inputTitle = txtTitle.getText().trim();
+        String inputAuthor = txtAuthor.getText().trim();
+        String inputGenre = txtGenre.getText().trim();
+        String inputShelf = txtShelfLocation.getText().trim();
+        String inputCondition = cmbCondition.getSelectedItem().toString();
+        boolean inputAvailable = chkAvailable.isSelected();
+
+        if (inputTitle.isEmpty() || inputAuthor.isEmpty() || inputGenre.isEmpty() || inputShelf.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                    "Error: Incomplete data fields detected!\nPlease fill in Title, Author, Genre, and Shelf Location before confirmation.", 
+                    "[E1] Validation Failure", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        selectedBook.setShelfLocation(inputShelf);
+        selectedBook.setIsAvailable(inputAvailable);
+        selectedBook.setBookCondition(inputCondition);
+        
+        selectedBook.updateStatus(inputAvailable);
+        selectedBook.updateCondition(inputCondition); 
+        
+        selectedBook.setBookID(selectedBook.getBookID()); 
+
+        LibraryBookBorrowingSystem.saveData();
+
+        JOptionPane.showMessageDialog(this, 
+                "System catalog successfully updated!\nBook ID: " + selectedBook.getBookID() + " has saved parameters safely.", 
+                "Update Confirmed", 
+                JOptionPane.INFORMATION_MESSAGE);
+
+        int curIdx = cmbBooks.getSelectedIndex();
+        catalogBooks = LibraryBookBorrowingSystem.globalCatalog.getBooks();
+        cmbBooks.removeItemAt(curIdx);
+        cmbBooks.insertItemAt("[ID: " + selectedBook.getBookID() + "] " + selectedBook.getTitle(), curIdx);
+        cmbBooks.setSelectedIndex(curIdx);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cmbBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBooksActionPerformed
+        int selectedIndex = cmbBooks.getSelectedIndex();
+        loadBookDetails(selectedIndex);
+    }//GEN-LAST:event_cmbBooksActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        new UpdateCatalogFrame().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,9 +328,12 @@ public class EditBookFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LBBS;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox chkAvailable;
     private javax.swing.JComboBox<String> cmbBooks;
     private javax.swing.JComboBox<String> cmbCondition;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
