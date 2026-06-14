@@ -6,7 +6,7 @@ package oodiproject;
 
 /**
  *
- * @author VICTUS
+ * @author Lenovo
  */
 public class UpdateCatalogFrame extends javax.swing.JFrame {
     
@@ -135,7 +135,9 @@ public class UpdateCatalogFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addBookBtnActionPerformed
 
     private void deleteBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookBtnActionPerformed
-        // TODO add your handling code here:
+        DeleteBookFrame deleteBookForm = new DeleteBookFrame();
+        deleteBookForm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_deleteBookBtnActionPerformed
 
     /**

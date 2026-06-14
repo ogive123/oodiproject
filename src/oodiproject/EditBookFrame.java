@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author VICTUS
+ * @author Lenovo
  */
 public class EditBookFrame extends javax.swing.JFrame {
     
