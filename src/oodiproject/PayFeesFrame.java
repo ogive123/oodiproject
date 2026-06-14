@@ -11,7 +11,6 @@ package oodiproject;
 public class PayFeesFrame extends javax.swing.JFrame {
     
     private Patron currentPatron = null;
-    double currentFees = this.currentPatron.getCurrentFees();
     private double calculatedPaymentFee = 0.0;
     
     
@@ -24,7 +23,7 @@ public class PayFeesFrame extends javax.swing.JFrame {
             this.currentPatron = (Patron) LibraryBookBorrowingSystem.loggedInUser;
             System.out.println("[DEBUG]: Successfully detected Patron! Username: " + this.currentPatron.getUsername());
             System.out.println("[DEBUG]: Successfully detected Patron! Password: " + this.currentPatron.getPassword());
-            System.out.println("[DEBUG]: Successfully detected Patron! Current Fees: " + currentFees);
+            System.out.println("[DEBUG]: Successfully detected Patron! Current Fees: " + this.currentPatron.getCurrentFees());
         } else {
             System.out.println("[DEBUG]: WARNING! loggedInUser is either null or not an instance of Patron.");
         }
@@ -35,6 +34,13 @@ public class PayFeesFrame extends javax.swing.JFrame {
     
     private void updateFeeLabels() {
         if (currentPatron != null) {
+        // Double check live fine balances right before rendering text labels
+        if (currentPatron.getBorrowingHistory() != null) {
+            double historyFines = currentPatron.getBorrowingHistory().calculateUnpaidFines();
+            if (historyFines > 0 && currentPatron.getCurrentFees() == 0.0) {
+                currentPatron.setCurrentFees(historyFines);
+            }
+        }
         lblOutstandingFees.setText(String.format("RM%.2f", currentPatron.getCurrentFees()));
     } else {
         lblOutstandingFees.setText("RM0.00");
