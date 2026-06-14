@@ -58,25 +58,20 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel2" min="-2" pref="147" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="PaymentMethod" min="-2" max="-2" attributes="0"/>
+                                      <Component id="PaymentMethodSelect" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="amount" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="txtPayAmount" min="-2" pref="180" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="CalculateFee" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="TotalPaymentFee" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="LBBS" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
-                                  <Component id="Backbtn" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="LBBS" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                          <Component id="Backbtn" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -105,14 +100,14 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="amount" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="txtPayAmount" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CalculateFee" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="TotalPaymentFee" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PaymentMethod" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="PaymentMethodSelect" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="66" max="32767" attributes="0"/>
               <Component id="ConfirmPaymentbtn" min="-2" max="-2" attributes="0"/>
@@ -181,17 +176,20 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPayAmountActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="CalculateFee">
       <Properties>
         <Property name="text" type="java.lang.String" value="Calculate"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CalculateFeeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="TotalPaymentFee">
       <Properties>
         <Property name="text" type="java.lang.String" value="Total Payment Fee: RM0.00"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="PaymentMethod">
+    <Component class="javax.swing.JComboBox" name="PaymentMethodSelect">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -203,7 +201,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PaymentMethodActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PaymentMethodSelectActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
