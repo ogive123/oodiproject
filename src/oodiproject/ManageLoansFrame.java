@@ -144,11 +144,13 @@ public class ManageLoansFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_BorrowBooksbtnActionPerformed
 
     private void RenewBookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenewBookbtnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new RenewBookFrame(loggedInOperator, targetPatron).setVisible(true);
     }//GEN-LAST:event_RenewBookbtnActionPerformed
 
     private void ReturnBooksbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnBooksbtnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new ReturnBookFrame(loggedInOperator, targetPatron).setVisible(true);
     }//GEN-LAST:event_ReturnBooksbtnActionPerformed
 
     private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
