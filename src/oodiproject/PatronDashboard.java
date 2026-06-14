@@ -147,7 +147,9 @@ public class PatronDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_payFinesButtonActionPerformed
 
     private void loanHistoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanHistoryBtnActionPerformed
-        // TODO add your handling code here:
+        LoanHistoryFrame historyScreen = new LoanHistoryFrame();
+        historyScreen.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_loanHistoryBtnActionPerformed
 
     private void manageLoansButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageLoansButtonActionPerformed
