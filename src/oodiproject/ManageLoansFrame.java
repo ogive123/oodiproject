@@ -12,11 +12,25 @@ public class ManageLoansFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ManageLoansFrame.class.getName());
 
+    
+    private User loggedInOperator;
+    private Patron targetPatron;
     /**
      * Creates new form ManageLoansFrame
      */
+    
     public ManageLoansFrame() {
         initComponents();
+        this.loggedInOperator = LibraryBookBorrowingSystem.loggedInUser;
+        if (this.loggedInOperator instanceof Patron) {
+            this.targetPatron = (Patron) this.loggedInOperator;
+        }
+    }
+    
+    public ManageLoansFrame(User operator, Patron patron) {
+        initComponents();
+        this.loggedInOperator = operator;
+        this.targetPatron = patron;
     }
 
     /**
@@ -125,7 +139,8 @@ public class ManageLoansFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BorrowBooksbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrowBooksbtnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new BorrowBookFrame(loggedInOperator, targetPatron).setVisible(true);
     }//GEN-LAST:event_BorrowBooksbtnActionPerformed
 
     private void RenewBookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenewBookbtnActionPerformed
@@ -137,9 +152,12 @@ public class ManageLoansFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ReturnBooksbtnActionPerformed
 
     private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
-        PatronDashboard patrondashboard = new PatronDashboard();
-        patrondashboard.setVisible(true);
         this.dispose();
+        if (loggedInOperator instanceof Librarian || loggedInOperator instanceof Admin) {
+            new LibrarianDashboard().setVisible(true);
+        } else {
+            new PatronDashboard().setVisible(true);
+        }
     }//GEN-LAST:event_BackbtnActionPerformed
 
     /**
