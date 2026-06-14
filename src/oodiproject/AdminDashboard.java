@@ -202,7 +202,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             
                 for (User u : usersList) {
                     reportBuilder.append(String.format("%-10d %-20s %-15s\n", 
-                            u.getUserID(), u.getUsername(), u.getClass().getSimpleName()));
+                            u.getUserID(), u.getUsername(), u.getClass().getSimpleName(), u.getPassword()));
                 }
             }
         
