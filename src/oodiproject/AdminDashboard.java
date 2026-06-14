@@ -35,10 +35,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         viewCatalogBtn = new javax.swing.JButton();
         changeUserRoleBtn = new javax.swing.JButton();
+        makeReportBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        generateReportSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
+        generateReportSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Inventory & Circulation", "User Statistics", "Finances" }));
+        generateReportSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateReportSelectActionPerformed(evt);
+            }
+        });
 
         editSystemSettingsBtn.setText("EDIT SYSTEM SETTINGS");
         editSystemSettingsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -76,28 +82,37 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        makeReportBtn.setText("MAKE REPORT");
+        makeReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeReportBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(viewCatalogBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(editSystemSettingsBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                            .addComponent(generateReportSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(changeUserRoleBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logOutBtn)))
+                .addContainerGap()
+                .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logOutBtn)
                 .addGap(19, 19, 19))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(changeUserRoleBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editSystemSettingsBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(generateReportSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(makeReportBtn)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(viewCatalogBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,7 +136,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(changeUserRoleBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(generateReportSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(generateReportSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(makeReportBtn))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -139,12 +156,97 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void viewCatalogBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCatalogBtnActionPerformed
-        // TODO add your handling code here:
+        CatalogFrame catalogscreen = new CatalogFrame();
+        catalogscreen.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_viewCatalogBtnActionPerformed
 
     private void changeUserRoleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUserRoleBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_changeUserRoleBtnActionPerformed
+
+    private void makeReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeReportBtnActionPerformed
+        String selectedReport = generateReportSelect.getSelectedItem().toString();
+        StringBuilder reportBuilder = new StringBuilder();
+        boolean hasData = false;
+
+        if (selectedReport.equals("Inventory & Circulation")) {
+            java.util.ArrayList<Book> booksList = LibraryBookBorrowingSystem.globalCatalog.getBooks();
+        
+            if (!booksList.isEmpty()) {
+                hasData = true;
+                reportBuilder.append("=========================================\n");
+                reportBuilder.append("    INVENTORY & CIRCULATION REPORT LOG   \n");
+                reportBuilder.append("=========================================\n\n");
+                reportBuilder.append(String.format("%-10s %-30s %-20s %-12s %-12s\n", "Book ID", "Title", "Author", "Status", "Condition"));
+                reportBuilder.append("------------------------------------------------------------------------------------------------------\n");
+            
+            for (Book b : booksList) {
+                String availability = b.isIsAvailable() ? "Available" : "On Loan";
+                reportBuilder.append(String.format("%-10d %-30.28s %-20.18s %-12s %-12s\n", 
+                        b.getBookID(), b.getTitle(), b.getAuthor(), availability, b.getBookCondition()));
+            }
+        }
+        
+        } else if (selectedReport.equals("User Statistics")) {
+            java.util.ArrayList<User> usersList = LibraryBookBorrowingSystem.userDatabase;
+        
+            if (!usersList.isEmpty()) {
+                hasData = true;
+                reportBuilder.append("=========================================\n");
+                reportBuilder.append("    ACTIVE USER METRICS PROFILE REPORT   \n");
+                reportBuilder.append("=========================================\n\n");
+                reportBuilder.append("Total Registered Accounts: ").append(usersList.size()).append("\n\n");
+                reportBuilder.append(String.format("%-10s %-20s %-15s\n", "User ID", "Username", "Account Type"));
+                reportBuilder.append("---------------------------------------------------------\n");
+            
+                for (User u : usersList) {
+                    reportBuilder.append(String.format("%-10d %-20s %-15s\n", 
+                            u.getUserID(), u.getUsername(), u.getClass().getSimpleName()));
+                }
+            }
+        
+        } else if (selectedReport.equals("Finances")) {
+            Finances finances = LibraryBookBorrowingSystem.globalFinances;
+        
+            if (finances.getRevenue() != 0 || finances.getExpenditure() != 0) {
+                hasData = true;
+                double netMargin = finances.getRevenue() - finances.getExpenditure();
+            
+                reportBuilder.append("=========================================\n");
+                reportBuilder.append("      FINANCIAL ANALYSIS REPORT LOG      \n");
+                reportBuilder.append("=========================================\n\n");
+                reportBuilder.append(String.format("Tracked Total Gross Revenue:   RM %,.2f\n", finances.getRevenue()));
+                reportBuilder.append(String.format("Tracked Operating Expenditure: RM %,.2f\n", finances.getExpenditure()));
+                reportBuilder.append("-----------------------------------------\n");
+                reportBuilder.append(String.format("Net Operating Margin Summary:  RM %,.2f\n", netMargin));
+            }
+        }
+
+        if (!hasData) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "No data found for the system category selection: " + selectedReport, 
+                    "System Operational Warning", 
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else {
+            javax.swing.JTextArea txtArea = new javax.swing.JTextArea(18, 55);
+            txtArea.setText(reportBuilder.toString());
+            txtArea.setFont(new java.awt.Font("Courier New", java.awt.Font.PLAIN, 12)); // Forces fixed alignment columns
+            txtArea.setEditable(false);
+            txtArea.setCaretPosition(0); // Anchors scrolling context to the top initial line
+        
+            javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(txtArea);
+        
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    scrollPane, 
+                    "Generated Report: " + selectedReport, 
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_makeReportBtnActionPerformed
+
+    private void generateReportSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportSelectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generateReportSelectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +280,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> generateReportSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logOutBtn;
+    private javax.swing.JButton makeReportBtn;
     private javax.swing.JButton viewCatalogBtn;
     // End of variables declaration//GEN-END:variables
 }

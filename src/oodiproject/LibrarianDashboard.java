@@ -182,7 +182,9 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void viewCatalogBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCatalogBtnActionPerformed
-        // TODO add your handling code here:
+        CatalogFrame catalogscreen = new CatalogFrame();
+        catalogscreen.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_viewCatalogBtnActionPerformed
 
     private void editBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookBtnActionPerformed
