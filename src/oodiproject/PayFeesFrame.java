@@ -10,14 +10,22 @@ package oodiproject;
  */
 public class PayFeesFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PayFeesFrame.class.getName());
-    
     private Patron currentPatron = null;
     private double calculatedPaymentFee = 0.0;
+    
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PayFeesFrame.class.getName());
 
     public PayFeesFrame() {
+        System.out.println("[DEBUG]: Global loggedInUser is: " + LibraryBookBorrowingSystem.loggedInUser);
+        
         if (LibraryBookBorrowingSystem.loggedInUser instanceof Patron) {
             this.currentPatron = (Patron) LibraryBookBorrowingSystem.loggedInUser;
+            System.out.println("[DEBUG]: Successfully detected Patron! Username: " + this.currentPatron.getUsername());
+            System.out.println("[DEBUG]: Successfully detected Patron! Password: " + this.currentPatron.getPassword());
+            System.out.println("[DEBUG]: Successfully detected Patron! Current Fees: " + this.currentPatron.getCurrentFees());
+        } else {
+            System.out.println("[DEBUG]: WARNING! loggedInUser is either null or not an instance of Patron.");
         }
         
         initComponents();
@@ -26,12 +34,18 @@ public class PayFeesFrame extends javax.swing.JFrame {
     
     private void updateFeeLabels() {
         if (currentPatron != null) {
-            lblOutstandingFees.setText(String.format("RM%.2f", currentPatron.getCurrentFees()));
-        } else {
-            lblOutstandingFees.setText("RM0.00");
+        // Double check live fine balances right before rendering text labels
+        if (currentPatron.getBorrowingHistory() != null) {
+            double historyFines = currentPatron.getBorrowingHistory().calculateUnpaidFines();
+            if (historyFines > 0 && currentPatron.getCurrentFees() == 0.0) {
+                currentPatron.setCurrentFees(historyFines);
+            }
         }
-        lblPaidFees.setText("RM0.00"); 
-        TotalPaymentFee.setText(String.format("Total Payment Fee: RM%.2f", calculatedPaymentFee));
+        lblOutstandingFees.setText(String.format("RM%.2f", currentPatron.getCurrentFees()));
+    } else {
+        lblOutstandingFees.setText("RM0.00");
+    } 
+    TotalPaymentFee.setText(String.format("Total Payment Fee: RM%.2f", calculatedPaymentFee));
     }
 
     /**
@@ -43,46 +57,33 @@ public class PayFeesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        outstandingfee1 = new javax.swing.JLabel();
         LBBS = new javax.swing.JLabel();
-        outstandingfee = new javax.swing.JLabel();
-        paidfee = new javax.swing.JLabel();
-        lblPaidFees = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         lblOutstandingFees = new javax.swing.JLabel();
-        amount = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         txtPayAmount = new javax.swing.JTextField();
         CalculateFee = new javax.swing.JButton();
         TotalPaymentFee = new javax.swing.JLabel();
+        jlabel69 = new javax.swing.JLabel();
         PaymentMethodSelect = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         ConfirmPaymentbtn = new javax.swing.JButton();
         Backbtn = new javax.swing.JButton();
-
-        outstandingfee1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        outstandingfee1.setText("Outstanding Fees:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         LBBS.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        LBBS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LBBS.setText("PAY FINES");
+        LBBS.setText("PAY FINES AND SYSTEM FEES");
 
-        outstandingfee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        outstandingfee.setText("Outstanding Fees:");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Outstanding Fees:");
 
-        paidfee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        paidfee.setText("Paid Fees:");
+        lblOutstandingFees.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblOutstandingFees.setText("RM0.00");
 
-        lblPaidFees.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblPaidFees.setText("RM00.00");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Enter Payment Amount:");
 
-        lblOutstandingFees.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblOutstandingFees.setText("RM00.00");
-
-        amount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        amount.setText("Enter Payment Amount:");
-
-        txtPayAmount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtPayAmount.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtPayAmount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPayAmountActionPerformed(evt);
@@ -96,7 +97,11 @@ public class PayFeesFrame extends javax.swing.JFrame {
             }
         });
 
+        TotalPaymentFee.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TotalPaymentFee.setText("Total Payment Fee: RM0.00");
+
+        jlabel69.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jlabel69.setText("Choose Payment Method:");
 
         PaymentMethodSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Online Banking", "E-Wallet", "Debit/Credit Card", "PayPal" }));
         PaymentMethodSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -105,16 +110,15 @@ public class PayFeesFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Choose Payment Method:");
-
-        ConfirmPaymentbtn.setText("Confirm");
+        ConfirmPaymentbtn.setText("Confirm Payment");
         ConfirmPaymentbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConfirmPaymentbtnActionPerformed(evt);
             }
         });
 
-        Backbtn.setText("BACK");
+        Backbtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Backbtn.setText("BACK TO DASHBOARD");
         Backbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackbtnActionPerformed(evt);
@@ -125,167 +129,137 @@ public class PayFeesFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ConfirmPaymentbtn)
+                .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(LBBS)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblOutstandingFees, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(417, 417, 417)
-                        .addComponent(ConfirmPaymentbtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jlabel69, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TotalPaymentFee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(outstandingfee)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblOutstandingFees, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(paidfee, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblPaidFees, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(PaymentMethodSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(amount)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtPayAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(CalculateFee))
-                                    .addComponent(TotalPaymentFee, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Backbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(54, Short.MAX_VALUE))
+                                .addComponent(txtPayAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(CalculateFee))
+                            .addComponent(PaymentMethodSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Backbtn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(Backbtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LBBS)
                 .addGap(18, 18, 18)
-                .addComponent(LBBS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPaidFees)
-                    .addComponent(paidfee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOutstandingFees)
-                    .addComponent(outstandingfee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPayAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CalculateFee))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TotalPaymentFee)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel1)
+                    .addComponent(lblOutstandingFees))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
+                    .addComponent(txtPayAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CalculateFee))
+                .addGap(18, 18, 18)
+                .addComponent(TotalPaymentFee)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlabel69)
                     .addComponent(PaymentMethodSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ConfirmPaymentbtn)
-                .addGap(37, 37, 37))
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPayAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPayAmountActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtPayAmountActionPerformed
 
-    private void PaymentMethodSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaymentMethodSelectActionPerformed
-         String PaymentMethod = PaymentMethodSelect.getSelectedItem().toString();
-    }//GEN-LAST:event_PaymentMethodSelectActionPerformed
-
-    private void ConfirmPaymentbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmPaymentbtnActionPerformed
-        if (currentPatron == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No active patron profile found.", "System Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (calculatedPaymentFee <= 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please insert an amount and click 'Calculate' before confirming your payment.", "Action Required", javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        String chosenMethod = PaymentMethodSelect.getSelectedItem().toString();
-        
-        // Track fees before processing payment
-        double initialFees = currentPatron.getCurrentFees();
-        
-        // Execute the exact backend payment calculation method
-        currentPatron.payFees(calculatedPaymentFee);
-        
-        // Calculate the difference to determine the exact payment made
-        double finalFees = currentPatron.getCurrentFees();
-        double actualPaidAmount = initialFees - finalFees;
-        
-        // Update the global core finances record directly without changing the main file
-        LibraryBookBorrowingSystem.globalFinances.setRevenue(
-            LibraryBookBorrowingSystem.globalFinances.getRevenue() + actualPaidAmount
-        );
-        
-        // Save the updated database to storagefile.dat immediately
-        LibraryBookBorrowingSystem.saveData();
-        
-        // Show success alert confirmation popup
-        String successMessage = String.format("Payment of RM%.2f via %s was successful!", actualPaidAmount, chosenMethod);
-        javax.swing.JOptionPane.showMessageDialog(this, successMessage, "Payment Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        
-        // Reset local transaction inputs
-        calculatedPaymentFee = 0.0;
-        txtPayAmount.setText("");
-        updateFeeLabels();
-        
-        // Close the payment window and redirect to the dashboard view
-        PatronDashboard patrondashboard = new PatronDashboard();
-        patrondashboard.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ConfirmPaymentbtnActionPerformed
-
-    private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
-        PatronDashboard patrondashboard = new PatronDashboard();
-        patrondashboard.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BackbtnActionPerformed
-
     private void CalculateFeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalculateFeeActionPerformed
-        if (currentPatron == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No active patron profile found. Please login first.", "System Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        String textInput = txtPayAmount.getText().trim();
+        if (textInput.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please fill in a valid numeric amount to calculate.", "Input Missing", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
-            String textAmount = txtPayAmount.getText().trim();
-            if (textAmount.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Please enter a payment amount.", "Input Error", javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
+            double parsedAmount = Double.parseDouble(textInput);
+            if (parsedAmount <= 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "The target payment amount must be greater than RM0.00", "Invalid Amount", javax.swing.JOptionPane.ERROR_MESSAGE);
+                calculatedPaymentFee = 0.0;
+            } else {
+                calculatedPaymentFee = parsedAmount;
             }
-            
-            double inputAmount = Double.parseDouble(textAmount);
-            
-            if (inputAmount <= 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Payment amount must be greater than RM0.00.", "Input Error", javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Check against the user's actual outstanding balance
-            if (inputAmount > currentPatron.getCurrentFees()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "You cannot pay more than your outstanding fee balance.", "Input Error", javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            calculatedPaymentFee = inputAmount;
             updateFeeLabels();
-            
         } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please enter a valid numeric amount (e.g., 10.50).", "Format Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Format Error: Please insert a valid numeric value (e.g., 10.50)", "Numeric Parsing Failed", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_CalculateFeeActionPerformed
+
+    private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
+        PatronDashboard dashboard = new PatronDashboard();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackbtnActionPerformed
+
+    private void ConfirmPaymentbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmPaymentbtnActionPerformed
+        if (currentPatron == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: No active patron user account matched.", "Session Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (calculatedPaymentFee <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please enter a valid amount and click 'Calculate' first before finalizing.", "Payment Uncalculated", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String selectedMethod = (String) PaymentMethodSelect.getSelectedItem();
+        int answer = javax.swing.JOptionPane.showConfirmDialog(this, 
+                String.format("Confirm processing payment of RM%.2f via %s?", calculatedPaymentFee, selectedMethod),
+                "Execute Transaction", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (answer == javax.swing.JOptionPane.YES_OPTION) {
+            double priorFee = currentPatron.getCurrentFees();
+            currentPatron.payFees(calculatedPaymentFee);
+            
+            if (calculatedPaymentFee >= priorFee) {
+                double change = calculatedPaymentFee - priorFee;
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                        String.format("Fees paid successfully!\nCleared System Balance.\nYour Change: RM%.2f", change), 
+                        "Transaction Approved", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                        String.format("Partial balance payment recorded.\nRemaining balance: RM%.2f", currentPatron.getCurrentFees()), 
+                        "Transaction Approved", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            // Sync mutations across data models and flush storage cache safely
+            LibraryBookBorrowingSystem.saveData();
+            
+            // Refresh components and input text fields
+            calculatedPaymentFee = 0.0;
+            txtPayAmount.setText("");
+            updateFeeLabels();
+        }
+    }//GEN-LAST:event_ConfirmPaymentbtnActionPerformed
+
+    private void PaymentMethodSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaymentMethodSelectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PaymentMethodSelectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,13 +293,10 @@ public class PayFeesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel LBBS;
     private javax.swing.JComboBox<String> PaymentMethodSelect;
     private javax.swing.JLabel TotalPaymentFee;
-    private javax.swing.JLabel amount;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jlabel69;
     private javax.swing.JLabel lblOutstandingFees;
-    private javax.swing.JLabel lblPaidFees;
-    private javax.swing.JLabel outstandingfee;
-    private javax.swing.JLabel outstandingfee1;
-    private javax.swing.JLabel paidfee;
     private javax.swing.JTextField txtPayAmount;
     // End of variables declaration//GEN-END:variables
 }

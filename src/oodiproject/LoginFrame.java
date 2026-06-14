@@ -175,6 +175,7 @@ public class LoginFrame extends javax.swing.JFrame {
         if (foundUser != null) {
             LibraryBookBorrowingSystem.loggedInUser = foundUser;
 
+                
             javax.swing.JOptionPane.showMessageDialog(this, 
                     "Login Successful!", 
                     "Authentication Success", 
